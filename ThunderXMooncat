@@ -1,0 +1,22 @@
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua'))()
+
+-- Add permanent "📝 Note" label in the top-right corner (like in Mooncat2)
+local noteGui = Instance.new("ScreenGui")
+noteGui.Name = "ReconnectNoteUI"
+noteGui.ResetOnSpawn = false
+noteGui.IgnoreGuiInset = true
+noteGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+noteGui.Parent = game:GetService("CoreGui")
+
+local noteLabel = Instance.new("TextLabel")
+noteLabel.Name = "ReconnectNote"
+noteLabel.Parent = noteGui
+noteLabel.AnchorPoint = Vector2.new(1, 0)
+noteLabel.Position = UDim2.new(1, -10, 0, 10)
+noteLabel.Size = UDim2.new(0, 300, 0, 25)
+noteLabel.BackgroundTransparency = 1
+noteLabel.Text = "📝 NOTE: ONCE THE GAME RECONNECTS, WAIT FOR IT PATIENTLY."
+noteLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+noteLabel.Font = Enum.Font.Gotham
+noteLabel.TextScaled = true
+noteLabel.TextXAlignment = Enum.TextXAlignment.Right
