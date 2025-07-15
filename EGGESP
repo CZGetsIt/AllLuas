@@ -1,6 +1,6 @@
 -- Load EggESP GUI
 local success, err = pcall(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/osbornscripts09/EggESP/refs/heads/main/message.txt"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CZGetsIt/AllLuas/refs/heads/main/manualtry"))()
 end)
 
 if not success then
