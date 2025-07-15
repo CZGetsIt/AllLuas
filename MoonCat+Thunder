@@ -1,31 +1,22 @@
--- Load the main Grow a Garden script
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua'))()
 
--- Add the Note icon in the top right corner
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "NoteIconUI"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.IgnoreGuiInset = true
-ScreenGui.Parent = game:GetService("CoreGui")
+-- Add permanent "📝 Note" label in the top-right corner (like in Mooncat2)
+local noteGui = Instance.new("ScreenGui")
+noteGui.Name = "ReconnectNoteUI"
+noteGui.ResetOnSpawn = false
+noteGui.IgnoreGuiInset = true
+noteGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+noteGui.Parent = game:GetService("CoreGui")
 
-local NoteButton = Instance.new("TextButton")
-NoteButton.Name = "NoteButton"
-NoteButton.Parent = ScreenGui
-NoteButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NoteButton.BackgroundTransparency = 1
-NoteButton.BorderSizePixel = 0
-NoteButton.Position = UDim2.new(1, -50, 0, 10)
-NoteButton.Size = UDim2.new(0, 40, 0, 40)
-NoteButton.Font = Enum.Font.SourceSansBold
-NoteButton.Text = "📝"
-NoteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-NoteButton.TextScaled = true
-
--- Optional tooltip or message
-NoteButton.MouseButton1Click:Connect(function()
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "Note";
-        Text = "Loaded Grow a Garden Script!";
-        Duration = 4;
-    })
-end)
+local noteLabel = Instance.new("TextLabel")
+noteLabel.Name = "ReconnectNote"
+noteLabel.Parent = noteGui
+noteLabel.AnchorPoint = Vector2.new(1, 0)
+noteLabel.Position = UDim2.new(1, -10, 0, 10)
+noteLabel.Size = UDim2.new(0, 300, 0, 25)
+noteLabel.BackgroundTransparency = 1
+noteLabel.Text = "📝 NOTE: ONCE THE GAME RECONNECTS, WAIT FOR IT PATIENTLY."
+noteLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+noteLabel.Font = Enum.Font.Gotham
+noteLabel.TextScaled = true
+noteLabel.TextXAlignment = Enum.TextXAlignment.Right
