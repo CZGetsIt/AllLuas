@@ -1,0 +1,31 @@
+-- Create warning GUI immediately and ensure it's on top
+local gui = Instance.new("ScreenGui")
+gui.Name = "ReconnectWarningGui"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Global -- Ensure stacking works
+gui.Parent = game:GetService("CoreGui") -- Use CoreGui to stay on top of all GUI
+
+local label = Instance.new("TextLabel")
+label.Name = "WarningLabel"
+label.Size = UDim2.new(0, 480, 0, 30)
+label.Position = UDim2.new(1, -490, 0, 10) -- Top right corner
+label.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
+label.BackgroundTransparency = 0.15
+label.BorderSizePixel = 0
+label.Text = "⚠ NOTE: IF IT RECONNECTS, JUST WAIT PATIENTLY"
+label.TextColor3 = Color3.new(1, 1, 1)
+label.TextStrokeTransparency = 0.5
+label.TextScaled = true
+label.Font = Enum.Font.GothamBold
+label.ZIndex = 9999 -- Make sure it's always on top
+label.Parent = gui
+
+-- Load external FreezeMooncat script AFTER the warning is on screen
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua"))()
+end)
+
+if not success then
+    warn("Failed to load FreezeMooncat script: " .. tostring(err))
+end
