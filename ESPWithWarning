@@ -1,0 +1,57 @@
+--[[
+EggESP script by osbornscripts09
+Now includes warning label from Mooncat2
+]]
+
+-- ESP Core Functionality (original content from message.txt)
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+
+local function createESP(target, text)
+	local billboard = Instance.new("BillboardGui")
+	billboard.Name = "EggESP"
+	billboard.Adornee = target
+	billboard.Size = UDim2.new(0, 100, 0, 40)
+	billboard.StudsOffset = Vector3.new(0, 2, 0)
+	billboard.AlwaysOnTop = true
+	billboard.Parent = target
+
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.new(1, 0, 1, 0)
+	label.BackgroundTransparency = 1
+	label.Text = text
+	label.TextColor3 = Color3.new(1, 1, 1)
+	label.TextScaled = true
+	label.Font = Enum.Font.Gotham
+	label.Parent = billboard
+end
+
+for _, egg in pairs(Workspace:GetDescendants()) do
+	if egg:IsA("BasePart") and egg.Name:lower():find("egg") then
+		createESP(egg, "Egg")
+	end
+end
+
+-- ✅ Add Mooncat2-style reconnect warning
+local player = Players.LocalPlayer
+
+local warningGui = Instance.new("ScreenGui")
+warningGui.Name = "ReconnectWarningGui"
+warningGui.IgnoreGuiInset = true
+warningGui.ResetOnSpawn = false
+warningGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+warningGui.Parent = player:WaitForChild("PlayerGui")
+
+local warningLabel = Instance.new("TextLabel")
+warningLabel.Name = "WarningLabel"
+warningLabel.Size = UDim2.new(0, 480, 0, 30)
+warningLabel.Position = UDim2.new(1, -490, 0, 10)
+warningLabel.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
+warningLabel.BackgroundTransparency = 0.15
+warningLabel.BorderSizePixel = 0
+warningLabel.Text = "⚠ WARNING: DON'T LEAVE THE GAME ONCE IT RECONNECTS OR YOU MIGHT GET BANNED"
+warningLabel.TextColor3 = Color3.new(1, 1, 1)
+warningLabel.TextStrokeTransparency = 0.5
+warningLabel.TextScaled = true
+warningLabel.Font = Enum.Font.GothamBold
+warningLabel.Parent = warningGui
