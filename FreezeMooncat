@@ -1,0 +1,81 @@
+-- FAKE Grow a Garden GUI
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.Name = "FakeGrowGardenGUI"
+gui.ResetOnSpawn = false
+
+-- Drag Frame
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.new(0, 250, 0, 180)
+main.Position = UDim2.new(0.05, 0, 0.2, 0)
+main.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+main.BorderSizePixel = 0
+main.Active = true
+main.Draggable = true
+
+-- Title
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.Text = "🌱 Grow a Garden Control"
+title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+title.TextColor3 = Color3.new(1,1,1)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+
+-- Create Buttons
+local buttons = {
+    {
+        TextOn = "Auto Middle: ON",
+        TextOff = "Auto Middle: OFF",
+        Name = "AutoMiddle",
+        Color = Color3.fromRGB(80, 180, 90)
+    },
+    {
+        Text = "❄️ Freeze Pets",
+        Name = "FreezePets",
+        Color = Color3.fromRGB(150, 150, 255)
+    },
+    {
+        Text = "🔄 Reset",
+        Name = "Reset",
+        Color = Color3.fromRGB(255, 100, 100)
+    }
+}
+
+local states = {
+    AutoMiddle = false
+}
+
+for i, info in ipairs(buttons) do
+    local btn = Instance.new("TextButton", main)
+    btn.Size = UDim2.new(0.9, 0, 0, 40)
+    btn.Position = UDim2.new(0.05, 0, 0, 35 + (i - 1) * 45)
+    btn.BackgroundColor3 = info.Color
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.Font = Enum.Font.Gotham
+    btn.TextSize = 14
+    btn.Name = info.Name
+    btn.AutoButtonColor = true
+    btn.BorderSizePixel = 0
+
+    if info.Name == "AutoMiddle" then
+        btn.Text = states.AutoMiddle and info.TextOn or info.TextOff
+    else
+        btn.Text = info.Text
+    end
+
+    -- Click behavior
+    btn.MouseButton1Click:Connect(function()
+        if info.Name == "AutoMiddle" then
+            states.AutoMiddle = not states.AutoMiddle
+            btn.Text = states.AutoMiddle and info.TextOn or info.TextOff
+            print("[FAKE] Auto Middle toggled:", states.AutoMiddle)
+        elseif info.Name == "FreezePets" then
+            print("[FAKE] FreezePets button clicked.")
+        elseif info.Name == "Reset" then
+            states.AutoMiddle = false
+            main:FindFirstChild("AutoMiddle").Text = buttons[1].TextOff
+            print("[FAKE] Reset triggered.")
+        end
+    end)
+end
