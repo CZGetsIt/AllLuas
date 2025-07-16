@@ -1,0 +1,102 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create ScreenGui
+local gui = Instance.new("ScreenGui", playerGui)
+gui.Name = "PetMutateDupeGUI"
+gui.ResetOnSpawn = false
+
+-- Draggable Main Frame
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.new(0, 300, 0, 200)
+main.Position = UDim2.new(0.5, -150, 0.5, -100)
+main.BackgroundColor3 = Color3.fromRGB(0, 20, 255)
+main.BorderSizePixel = 0
+main.Active = true
+main.Draggable = true
+
+-- TopBar with Close Button
+local close = Instance.new("TextButton", main)
+close.Text = "X"
+close.Size = UDim2.new(0, 30, 0, 30)
+close.Position = UDim2.new(1, -35, 0, 5)
+close.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+close.TextColor3 = Color3.fromRGB(255, 255, 0)
+close.MouseButton1Click:Connect(function() gui.Enabled = false end)
+
+-- Instruction Label
+local instruction = Instance.new("TextLabel", main)
+instruction.Text = "NOTE: Kindly hold the pet you want to make changes"
+instruction.Size = UDim2.new(1, -10, 0, 40)
+instruction.Position = UDim2.new(0, 5, 0, 35)
+instruction.TextColor3 = Color3.fromRGB(255, 255, 0)
+instruction.BackgroundTransparency = 1
+instruction.TextWrapped = true
+instruction.Font = Enum.Font.SourceSansBold
+instruction.TextSize = 14
+
+-- Mutate / Dupe Button
+local button = Instance.new("TextButton", main)
+button.Text = "MUTATE / DUPE"
+button.Size = UDim2.new(1, -40, 0, 40)
+button.Position = UDim2.new(0, 20, 0, 90)
+button.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+button.TextColor3 = Color3.fromRGB(0, 20, 255)
+button.Font = Enum.Font.SourceSansBold
+button.TextSize = 16
+
+-- Cooldown Logic
+local cooldown = false
+local function startProcess(mode)
+	if cooldown then return end
+	cooldown = true
+	button.Text = "Cooldown... 10s"
+	task.delay(10, function()
+		button.Text = "MUTATE / DUPE"
+		cooldown = false
+	end)
+
+	local popup = Instance.new("Frame", gui)
+	popup.Size = UDim2.new(0, 300, 0, 100)
+	popup.Position = UDim2.new(0.5, -150, 0.5, -50)
+	popup.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+	popup.BorderSizePixel = 0
+
+	local label = Instance.new("TextLabel", popup)
+	label.Text = (mode == "mutate" and "MUTATING" or "DUPLICATING") .. " PET, PLEASE WAIT"
+	label.Size = UDim2.new(1, 0, 0, 30)
+	label.TextColor3 = Color3.fromRGB(255, 255, 0)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.SourceSansBold
+	label.TextSize = 14
+
+	local bar = Instance.new("Frame", popup)
+	bar.Size = UDim2.new(0, 0, 0, 10)
+	bar.Position = UDim2.new(0, 0, 1, -20)
+	bar.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+	bar.BorderSizePixel = 0
+
+	local tween = game:GetService("TweenService"):Create(bar, TweenInfo.new(3), {Size = UDim2.new(1, 0, 0, 10)})
+	tween:Play()
+	tween.Completed:Wait()
+
+	popup:Destroy()
+
+	local donePopup = Instance.new("TextLabel", gui)
+	donePopup.Size = UDim2.new(0, 300, 0, 40)
+	donePopup.Position = UDim2.new(0.5, -150, 0.5, 100)
+	donePopup.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+	donePopup.TextColor3 = Color3.fromRGB(255, 255, 0)
+	donePopup.Text = "SUCCESSFULLY " .. (mode == "mutate" and "MUTATED" or "DUPLICATED") .. " PET, PLEASE SEE INVENTORY"
+	donePopup.Font = Enum.Font.SourceSansBold
+	donePopup.TextSize = 14
+	donePopup.TextWrapped = true
+	task.delay(3, function() donePopup:Destroy() end)
+end
+
+-- Button Click Event
+button.MouseButton1Click:Connect(function()
+	local mode = math.random(1, 2) == 1 and "mutate" or "dupe"
+	startProcess(mode)
+end)
