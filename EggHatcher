@@ -145,7 +145,7 @@ local function flashEffect(button)
 end
 
 local function countdownAndRandomize(button)
-    for i = 10, 1, -1 do
+    for i = 2, 1, -1 do
         button.Text = "🎲 Randomize in: " .. i
         wait(1)
     end
